@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -139,9 +140,9 @@ class _CatScreenState extends State<CatScreen> {
       _isLoading = true;
       _hasError = false;
     });
-
+    final apiKey = dotenv.env['CAT_API_KEY'];
     final url = Uri.parse(
-      'https://api.thecatapi.com/v1/images/search?has_breeds=1&api_key=live_2L4N0cSJuh78pclx7XWNzrOvnMJS4pB1zJgILL1mtNO2plpcr8kdInJtYRkRnspl',
+      'https://api.thecatapi.com/v1/images/search?has_breeds=1&api_key=$apiKey',
     );
 
     try {
