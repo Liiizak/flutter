@@ -275,13 +275,14 @@ class _CatDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screen_width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () => Navigator.pop(context),
       child: Scaffold(
-        backgroundColor: Colors.black54,
+        backgroundColor: const Color.fromARGB(228, 0, 0, 0),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(screen_width * 0.1),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
