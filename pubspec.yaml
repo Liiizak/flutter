@@ -36,6 +36,8 @@ dependencies:
   get_it: ^7.6.0
   intl: ^0.18.1
   connectivity_plus: ^5.0.2
+  cached_network_image: ^3.2.3
+  shared_preferences: ^2.0.15
   flutter_dotenv: ^5.1.0
 
   # The following adds the Cupertino Icons font to your application.
@@ -44,6 +46,7 @@ dependencies:
   flutter_card_swiper: ^7.0.2
 
 dev_dependencies:
+  bloc_test: ^9.1.0
   flutter_test:
     sdk: flutter
 
@@ -53,6 +56,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  mocktail: ^0.3.0
   flutter_launcher_icons: "^0.14.3"
   
 
@@ -118,3 +122,4 @@ flutter_launcher_icons:
   macos:
     generate: true
     image_path: "images/icon.jpg"
+

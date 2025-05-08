@@ -6,26 +6,22 @@ class LikedCatsState {
   final List<LikedCat> cats;
   final String filter;
   final bool isLoading;
-  final String? error;
 
   LikedCatsState({
     required this.cats,
     this.filter = '',
     this.isLoading = false,
-    this.error,
   });
 
   LikedCatsState copyWith({
     List<LikedCat>? cats,
     String? filter,
     bool? isLoading,
-    String? error,
   }) {
     return LikedCatsState(
       cats: cats ?? this.cats,
       filter: filter ?? this.filter,
       isLoading: isLoading ?? this.isLoading,
-      error: error,
     );
   }
 }
@@ -36,17 +32,24 @@ class LikedCatsCubit extends Cubit<LikedCatsState> {
   LikedCatsCubit({required this.repository})
     : super(LikedCatsState(cats: repository.getAll()));
 
-  void addLikedCat(LikedCat cat) {
-    repository.add(cat);
-    emit(state.copyWith(cats: repository.getAll()));
+  Future<void> addLikedCat(LikedCat cat) async {
+    emit(state.copyWith(isLoading: true));
+    await repository.add(cat);
+    emit(state.copyWith(cats: repository.getAll(), isLoading: false));
   }
 
-  void removeLikedCat(LikedCat cat) {
-    repository.remove(cat);
-    emit(state.copyWith(cats: repository.getAll()));
+  Future<void> removeLikedCat(LikedCat cat) async {
+    emit(state.copyWith(isLoading: true));
+    await repository.remove(cat);
+    emit(state.copyWith(cats: repository.getAll(), isLoading: false));
   }
 
   void filterCats(String breed) {
     emit(state.copyWith(filter: breed));
+  }
+
+  void loadLikedCats() {
+    final all = repository.getAll();
+    emit(state.copyWith(cats: all));
   }
 }

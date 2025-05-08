@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
 import '../cubits/liked_cats_cubit.dart';
 
 class LikedCatsScreen extends StatelessWidget {
@@ -31,9 +33,7 @@ class LikedCatsScreen extends StatelessWidget {
                     labelText: 'Фильтр по породе',
                     border: OutlineInputBorder(),
                   ),
-                  onChanged: (value) {
-                    context.read<LikedCatsCubit>().filterCats(value);
-                  },
+                  onChanged: context.read<LikedCatsCubit>().filterCats,
                 ),
               ),
               Expanded(
@@ -54,15 +54,17 @@ class LikedCatsScreen extends StatelessWidget {
                                 vertical: 5,
                               ),
                               child: ListTile(
-                                leading: Image.network(
-                                  cat.imageUrl,
+                                leading: CachedNetworkImage(
+                                  imageUrl: cat.imageUrl,
                                   width: 50,
                                   height: 50,
                                   fit: BoxFit.cover,
-                                  loadingBuilder: (context, child, progress) {
-                                    if (progress == null) return child;
-                                    return const CircularProgressIndicator();
-                                  },
+                                  placeholder:
+                                      (ctx, url) =>
+                                          const CircularProgressIndicator(),
+                                  errorWidget:
+                                      (ctx, url, error) =>
+                                          const Icon(Icons.error),
                                 ),
                                 title: Text(cat.breed),
                                 subtitle: Text(
@@ -73,11 +75,10 @@ class LikedCatsScreen extends StatelessWidget {
                                     Icons.delete,
                                     color: Colors.red,
                                   ),
-                                  onPressed: () {
-                                    context
-                                        .read<LikedCatsCubit>()
-                                        .removeLikedCat(cat);
-                                  },
+                                  onPressed:
+                                      () => context
+                                          .read<LikedCatsCubit>()
+                                          .removeLikedCat(cat),
                                 ),
                               ),
                             );
